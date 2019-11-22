@@ -21,7 +21,7 @@ def CoeffAdd(w1,w2,b,LR):
 
 LR = 0.1    
 
-w1 = 4
+w1 = 7
 w2 = 5
 b = -11
 
