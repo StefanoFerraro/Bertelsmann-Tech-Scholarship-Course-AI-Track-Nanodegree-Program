@@ -57,8 +57,6 @@ def trainPerceptronAlgorithm(X, y, learn_rate = 0.01, num_epochs = 100):
         W, b = perceptronStep(X, y, W, b, learn_rate)
         boundary_lines.append((-W[0]/W[1], -b/W[1]))
     return boundary_lines
-
-#%% Init
     
 # Data extraction
 data = pd.read_csv("DataSet1.csv")
@@ -75,7 +73,7 @@ boundary_lines = trainPerceptronAlgorithm(X,y)
 
 plt.figure()
 
-# X separated based on label(y)
+# X separation based on label(y)
 condition = (y[:] == 0)
 condition = np.squeeze(condition)
 X_neg = X[condition]
@@ -87,7 +85,8 @@ x = np.arange(0,1.1,0.5)
     # green lines for the iterations
 for i in range(len(boundary_lines)):
     plt.plot(x,boundary_lines[i][0][0]*x+boundary_lines[i][1][0], 'g--', linewidth=0.5)
-    #black line for the last
+
+#black line for the last
 plt.plot(x,boundary_lines[i][0][0]*x+boundary_lines[i][1][0], 'k-', linewidth=1.5)
 
 #Points plot
