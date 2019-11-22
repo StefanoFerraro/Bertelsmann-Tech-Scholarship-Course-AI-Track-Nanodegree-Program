@@ -82,8 +82,9 @@ X_pos= X[np.invert(condition)]
 #Lines plot
 x = np.arange(0,1.1,0.5) 
 
-    # green lines for the iterations
+    
 for i in range(len(boundary_lines)):
+    # green lines for the iterations
     plt.plot(x,boundary_lines[i][0][0]*x+boundary_lines[i][1][0], 'g--', linewidth=0.5)
 
 #black line for the last
