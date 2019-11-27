@@ -23,6 +23,7 @@ def display(m, b, color='g--'):
     x = np.arange(-10, 10, 0.1)
     plt.plot(x, m*x+b, color)
 
+# Activation (step) function, Discrete Function
 def stepFunction(t):
     if t >= 0:
         return 1
@@ -69,17 +70,17 @@ data = pd.read_csv('DataSet1.csv', header=None)
 X = np.array(data[[0,1]])
 y = np.array(data[2])
 
-# Main program execution
-boundary_lines = trainPerceptronAlgorithm(X,y)
-
-# Plotting 
-plt.figure()
-
 # X separation based on label(y)
 condition = (y[:] == 0)
 
 X_neg = X[condition]
 X_pos= X[np.invert(condition)]
+
+# Main program execution
+boundary_lines = trainPerceptronAlgorithm(X,y)
+
+# Plotting 
+plt.figure()
 
 # Lines plot
 for i in range(len(boundary_lines)):

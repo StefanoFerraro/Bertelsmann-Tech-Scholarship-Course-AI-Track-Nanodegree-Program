@@ -23,7 +23,7 @@ def display(m, b, color='g--'):
     x = np.arange(-10, 10, 0.1)
     plt.plot(x, m*x+b, color)
 
-# Activation (sigmoid) function
+# Activation (sigmoid) function, Continuous function 
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
@@ -31,7 +31,7 @@ def sigmoid(x):
 def output_formula(features, weights, bias):
     return sigmoid(np.dot(features, weights) + bias)
 
-# Error function based on the Cross-Entropy for a 2 dimennsion set
+# Error function based on the Cross-Entropy for a 2 dimension set
 def error_formula(y, output):
     return - y*np.log(output) - (1 - y) * np.log(1-output)
 
@@ -101,6 +101,12 @@ def train(features, targets, epochs, learnrate, graph_lines=False):
     plt.plot(errors)
     plt.show()
 
+# Data extraction
+data = pd.read_csv('DataSet1.csv', header=None)
+X = np.array(data[[0,1]])
+y = np.array(data[2])
+
+
 # Setting the random seed, feel free to change it and see different solutions.
 np.random.seed(42)
 
@@ -108,11 +114,6 @@ np.random.seed(42)
 # between consecutive updates 
 epochs = 1000
 learnrate = 0.01
-
-# Data extraction
-data = pd.read_csv('DataSet1.csv', header=None)
-X = np.array(data[[0,1]])
-y = np.array(data[2])
 
 plt.figure()
 
