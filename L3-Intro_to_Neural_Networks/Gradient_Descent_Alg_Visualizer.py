@@ -137,6 +137,7 @@ def train(data, features, targets, epochs, learnrate, graph_lines=False):
     
     #Plotting
     plot(fig)
+    fig.show()
 
 # Data extraction
 data = pd.read_csv('DataSet1.csv', header=None)
@@ -160,7 +161,7 @@ np.random.seed()
 
 # Input Parameter, Epochs represent the number of updates/iterations, Learning Rate the step
 # between consecutive updates 
-epochs = 1000
+epochs = 100
 learnrate = 0.01
 
 # Main Program execution    
