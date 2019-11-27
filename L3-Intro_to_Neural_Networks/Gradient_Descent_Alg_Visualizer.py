@@ -137,7 +137,6 @@ def train(data, features, targets, epochs, learnrate, graph_lines=False):
     
     #Plotting
     plot(fig)
-    fig.show()
 
 # Data extraction
 data = pd.read_csv('DataSet1.csv', header=None)
