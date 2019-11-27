@@ -32,7 +32,7 @@ x1 = np.arange(0.0, 10.0, 0.1)
 plt.figure()
 plt.plot(P[0],P[1], 'o')
 
-for i in range(11):
+for i in range(30):
     try:
         plt.plot(x1, f(x1,w1,w2,b))
         w1,w2,b = CoeffAdd(w1,w2,b,LR)

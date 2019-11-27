@@ -10,22 +10,29 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# Setting the random seed, feel free to change it and see different solutions.
-np.random.seed()
+# Plotting functions for both points and lines
+def plot_points(X, y):
+    admitted = X[np.argwhere(y==1)]
+    rejected = X[np.argwhere(y==0)]
+    plt.scatter([s[0][0] for s in rejected], [s[0][1] for s in rejected], s = 25, color = 'blue', edgecolor = 'k')
+    plt.scatter([s[0][0] for s in admitted], [s[0][1] for s in admitted], s = 25, color = 'red', edgecolor = 'k')
+
+def display(m, b, color='g--'):
+    plt.xlim(-0.05,1.05)
+    plt.ylim(-0.05,1.05)
+    x = np.arange(-10, 10, 0.1)
+    plt.plot(x, m*x+b, color)
 
 def stepFunction(t):
     if t >= 0:
         return 1
     return 0
 
+# Prediction function concatenate the perceptron function to a step function
 def prediction(X, W, b):
-    return stepFunction((np.matmul(X,W)+b)[0])
+    return stepFunction((np.dot(X,W)+b))
 
-# TODO: Fill in the code below to implement the perceptron trick.
-# The function should receive as inputs the data X, the labels y,
-# the weights W (as an array), and the bias b,
-# update the weights and bias W, b, according to the perceptron algorithm,
-# and return W and b.
+# Perceptron weight/bias update
 def perceptronStep(X, y, W, b, learn_rate = 0.01):
     
     for i in range(len(X)):
@@ -40,11 +47,7 @@ def perceptronStep(X, y, W, b, learn_rate = 0.01):
             b -= learn_rate
     return W, b
     
-# This function runs the perceptron algorithm repeatedly on the dataset,
-# and returns a few of the boundary lines obtained in the iterations,
-# for plotting purposes.
-# Feel free to play with the learning rate and the num_epochs,
-# and see your results plotted below.
+# Perceptron Algorithm function, epochs are the number of iterations of the Algorithm
 def trainPerceptronAlgorithm(X, y, learn_rate = 0.01, num_epochs = 100):
     x_min, x_max = min(X.T[0]), max(X.T[0])
     y_min, y_max = min(X.T[1]), max(X.T[1])
@@ -57,44 +60,37 @@ def trainPerceptronAlgorithm(X, y, learn_rate = 0.01, num_epochs = 100):
         W, b = perceptronStep(X, y, W, b, learn_rate)
         boundary_lines.append((-W[0]/W[1], -b/W[1]))
     return boundary_lines
-    
+
+# Setting the random seed, feel free to change it and see different solutions.
+np.random.seed(42)
+
 # Data extraction
-data = pd.read_csv("DataSet1.csv")
-X = data[["x1","x2"]] 
-y = data["y"] 
+data = pd.read_csv('DataSet1.csv', header=None)
+X = np.array(data[[0,1]])
+y = np.array(data[2])
 
-#Data conversion from DataFrame to np.array
-X = pd.DataFrame(X).to_numpy()
-y = pd.DataFrame(y).to_numpy()
-
+# Main program execution
 boundary_lines = trainPerceptronAlgorithm(X,y)
 
-#%% Plotting
-
+# Plotting 
 plt.figure()
 
 # X separation based on label(y)
 condition = (y[:] == 0)
-condition = np.squeeze(condition)
+
 X_neg = X[condition]
 X_pos= X[np.invert(condition)]
 
-#Lines plot
-x = np.arange(0,1.1,0.5) 
-
-    
+# Lines plot
 for i in range(len(boundary_lines)):
-    # green lines for the iterations
-    plt.plot(x,boundary_lines[i][0][0]*x+boundary_lines[i][1][0], 'g--', linewidth=0.5)
+    display(boundary_lines[i][0],boundary_lines[i][1])
+    
+# Black color for the last line
+display(boundary_lines[i][0],boundary_lines[i][1], 'black')
 
-#black line for the last
-plt.plot(x,boundary_lines[i][0][0]*x+boundary_lines[i][1][0], 'k-', linewidth=1.5)
+# Plot points
+plot_points(X,y)
 
-#Points plot
-plt.plot(X_pos[:,0],X_pos[:,1], 'bo')
-plt.plot(X_neg[:,0],X_neg[:,1], 'ro')
-
-plt.axis([0, 1, 0, 1])
 
     
 
